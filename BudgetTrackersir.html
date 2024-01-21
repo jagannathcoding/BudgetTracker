@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #expense-container {
+            width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #expense-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #expense-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .expense {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .expense input[type="text"],
+        .expense input[type="number"] {
+            flex: 1;
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        .expense button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .financial-insights {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="expense-container">
+        <h2>Anisoft Budget Tracker</h2>
+        
+        <div id="expense-form">
+            <label for="expense-category">Category:</label>
+            <input type="text" id="expense-category" placeholder="Enter category">
+
+            <label for="expense-amount">Amount:</label>
+            <input type="number" id="expense-amount" placeholder="Enter amount">
+
+            <button onclick="addExpense()">Add Expense</button>
+        </div>
+
+        <ul id="expense-list"></ul>
+
+        <div class="financial-insights">
+            <h3>Financial Insights</h3>
+            <p>Total Expenses: <span id="total-expenses">₹0</span></p>
+            <p>Budget Remaining: <span id="budget-remaining">₹1000</span></p>
+        </div>
+    </div>
+
+    <script>
+        var totalExpenses = 0;
+        var budget = 1000; // Set your budget here
+
+        function addExpense() {
+            var categoryInput = document.getElementById('expense-category');
+            var amountInput = document.getElementById('expense-amount');
+            var expenseList = document.getElementById('expense-list');
+            var totalExpensesElement = document.getElementById('total-expenses');
+            var budgetRemainingElement = document.getElementById('budget-remaining');
+
+            if (categoryInput.value.trim() === '' || amountInput.value.trim() === '') {
+                alert('Please enter both category and amount.');
+                return;
+            }
+
+            var expenseItem = document.createElement('li');
+            expenseItem.className = 'expense';
+
+            var categoryText = document.createElement('span');
+            categoryText.textContent = categoryInput.value;
+
+            var amountText = document.createElement('span');
+            amountText.textContent = '₹' + amountInput.value;
+
+            expenseItem.appendChild(categoryText);
+            expenseItem.appendChild(amountText);
+
+            expenseList.appendChild(expenseItem);
+
+            // Update total expenses and budget remaining
+            totalExpenses += parseFloat(amountInput.value);
+            budget -= parseFloat(amountInput.value);
+
+            totalExpensesElement.textContent = '₹' + totalExpenses;
+            budgetRemainingElement.textContent = '₹' + budget;
+
+            // Clear input fields
+            categoryInput.value = '';
+            amountInput.value = '';
+        }
+    </script>
+
+</body>
+</html>
